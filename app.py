@@ -20,7 +20,7 @@ st.set_page_config(page_title="SGS Auditor AI", page_icon="🤖", layout="wide")
 st.markdown("""
     <div style='background-color: #f8f9fa; padding: 20px; border-radius: 15px; margin-bottom: 20px;'>
         <h1 style='color: #18181b; margin-bottom: 0px;'>🤖 SGS Auditor AI</h1>
-        <p style='color: #71717a; font-size: 16px;'>ระบบตรวจสอบความสอดคล้องข้อมูล SGS, Toschool และเวลาเรียน ด้วย gemini-1.5-flash</p>
+        <p style='color: #71717a; font-size: 16px;'>ระบบตรวจสอบความสอดคล้องข้อมูล SGS, Toschool และเวลาเรียน ด้วย Gemini 3.1 Pro</p>
     </div>
 """, unsafe_allow_html=True)
 
@@ -53,7 +53,7 @@ def upload_to_gemini(files, prefix):
 st.markdown("<br>", unsafe_allow_html=True)
 col_btn, _ = st.columns([1, 2])
 with col_btn:
-    start_btn = st.button("🚀 เริ่มวิเคราะห์เชิงลึกด้วย gemini-1.5-pro", type="primary", use_container_width=True)
+    start_btn = st.button("🚀 เริ่มวิเคราะห์เชิงลึกด้วย Gemini 3.1 Pro", type="primary", use_container_width=True)
 
 if start_btn:
     if not sgs_files or not to_files or not time_files:
@@ -87,7 +87,7 @@ if start_btn:
                 }
                 """
 
-                model = genai.GenerativeModel("gemini-1.5-pro")
+                model = genai.GenerativeModel("gemini-3.1-pro-preview")
                 response = model.generate_content(
                     all_files + [prompt],
                     generation_config=genai.GenerationConfig(
@@ -126,9 +126,4 @@ if start_btn:
                 )
 
             except Exception as e:
-
                 st.error(f"เกิดข้อผิดพลาดในการวิเคราะห์: {str(e)}")
-
-
-
-
