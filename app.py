@@ -20,7 +20,7 @@ st.set_page_config(page_title="SGS Auditor AI", page_icon="🤖", layout="wide")
 st.markdown("""
     <div style='background-color: #f8f9fa; padding: 20px; border-radius: 15px; margin-bottom: 20px;'>
         <h1 style='color: #18181b; margin-bottom: 0px;'>🤖 SGS Auditor AI</h1>
-        <p style='color: #71717a; font-size: 16px;'>ระบบตรวจสอบความสอดคล้องข้อมูล SGS, Toschool และเวลาเรียน ด้วย Gemini 3.1 Pro</p>
+        <p style='color: #71717a; font-size: 16px;'>ระบบตรวจสอบความสอดคล้องข้อมูล SGS, Toschool และเวลาเรียน ด้วย Gemini 2.0 Flash ⚡</p>
     </div>
 """, unsafe_allow_html=True)
 
@@ -53,13 +53,13 @@ def upload_to_gemini(files, prefix):
 st.markdown("<br>", unsafe_allow_html=True)
 col_btn, _ = st.columns([1, 2])
 with col_btn:
-    start_btn = st.button("🚀 เริ่มวิเคราะห์เชิงลึกด้วย Gemini 3.1 Pro", type="primary", use_container_width=True)
+    start_btn = st.button("🚀 เริ่มวิเคราะห์เชิงลึกด้วย Gemini 2.0 Flash", type="primary", use_container_width=True)
 
 if start_btn:
     if not sgs_files or not to_files or not time_files:
         st.error("⚠️ กรุณาอัปโหลดไฟล์ให้ครบทั้ง 3 ช่องก่อนทำการวิเคราะห์ครับ")
     else:
-        with st.spinner("🧠 กำลังให้สมองกลอ่านไฟล์และเปรียบเทียบข้อมูล (อาจใช้เวลา 1-2 นาที)..."):
+        with st.spinner("⚡ กำลังให้สมองกล Flash อ่านไฟล์และเปรียบเทียบข้อมูลอย่างรวดเร็ว..."):
             try:
                 g_sgs = upload_to_gemini(sgs_files, "SGS")
                 g_to = upload_to_gemini(to_files, "TO")
@@ -87,7 +87,8 @@ if start_btn:
                 }
                 """
 
-                model = genai.GenerativeModel("gemini-3.1-pro-preview")
+                # เปลี่ยนมาใช้รุ่น Flash ที่นี่ครับ
+                model = genai.GenerativeModel("gemini-2.0-flash")
                 response = model.generate_content(
                     all_files + [prompt],
                     generation_config=genai.GenerationConfig(
@@ -120,7 +121,7 @@ if start_btn:
                 st.download_button(
                     label="📥 ดาวน์โหลดผลลัพธ์ (Excel)",
                     data=excel_data,
-                    file_name="AI_Teacher_Audit.xlsx",
+                    file_name="AI_Teacher_Audit_Flash.xlsx",
                     mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
                     type="primary"
                 )
