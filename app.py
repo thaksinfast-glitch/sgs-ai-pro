@@ -87,7 +87,7 @@ if start_btn:
                 }
                 """
 
-                model = genai.GenerativeModel(""gemini-1.5-pro"")
+                model = genai.GenerativeModel("gemini-1.5-pro")
                 response = model.generate_content(
                     all_files + [prompt],
                     generation_config=genai.GenerationConfig(
@@ -128,5 +128,6 @@ if start_btn:
             except Exception as e:
 
                 st.error(f"เกิดข้อผิดพลาดในการวิเคราะห์: {str(e)}")
+
 
 
