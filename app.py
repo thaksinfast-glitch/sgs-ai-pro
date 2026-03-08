@@ -53,7 +53,7 @@ def upload_to_gemini(files, prefix):
 st.markdown("<br>", unsafe_allow_html=True)
 col_btn, _ = st.columns([1, 2])
 with col_btn:
-    start_btn = st.button("🚀 เริ่มวิเคราะห์เชิงลึกด้วย gemini-1.5-flash", type="primary", use_container_width=True)
+    start_btn = st.button("🚀 เริ่มวิเคราะห์เชิงลึกด้วย gemini-1.5-pro", type="primary", use_container_width=True)
 
 if start_btn:
     if not sgs_files or not to_files or not time_files:
@@ -128,6 +128,7 @@ if start_btn:
             except Exception as e:
 
                 st.error(f"เกิดข้อผิดพลาดในการวิเคราะห์: {str(e)}")
+
 
 
 
