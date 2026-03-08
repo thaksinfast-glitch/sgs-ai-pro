@@ -20,7 +20,7 @@ st.set_page_config(page_title="SGS Auditor AI", page_icon="🤖", layout="wide")
 st.markdown("""
     <div style='background-color: #f8f9fa; padding: 20px; border-radius: 15px; margin-bottom: 20px;'>
         <h1 style='color: #18181b; margin-bottom: 0px;'>🤖 SGS Auditor AI</h1>
-        <p style='color: #71717a; font-size: 16px;'>ระบบตรวจสอบความสอดคล้องข้อมูล SGS, Toschool และเวลาเรียน ด้วย Gemini 3.1 Pro</p>
+        <p style='color: #71717a; font-size: 16px;'>ระบบตรวจสอบความสอดคล้องข้อมูล SGS, Toschool และเวลาเรียน ด้วย gemini-1.5-flash</p>
     </div>
 """, unsafe_allow_html=True)
 
@@ -126,4 +126,5 @@ if start_btn:
                 )
 
             except Exception as e:
+
                 st.error(f"เกิดข้อผิดพลาดในการวิเคราะห์: {str(e)}")
