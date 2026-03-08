@@ -6,20 +6,21 @@ from openai import OpenAI
 from io import BytesIO
 
 # ==========================================
-# 🔑 เชื่อมต่อ API ของ DeepSeek (ฝังกุญแจไว้ให้แล้วครับ)
+# 🔑 เชื่อมต่อ API ของ ChatGPT (OpenAI)
 # ==========================================
-API_KEY = "sk-40631a851f774914a88c1c83cf3897d7"
-client = OpenAI(api_key=API_KEY, base_url="https://api.deepseek.com")
+# ใส่ API Key ของคุณครูโดยตรงตามที่ขอครับ (ระวังเรื่องความปลอดภัยบน GitHub Public นะครับ)
+API_KEY = "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"
+client = OpenAI(api_key=API_KEY)
 
 # ==========================================
 # 🎨 ตั้งค่าหน้าตาแอปพลิเคชัน
 # ==========================================
-st.set_page_config(page_title="SGS Auditor AI", page_icon="🐳", layout="wide")
+st.set_page_config(page_title="SGS Auditor AI", page_icon="🟢", layout="wide")
 
 st.markdown("""
-    <div style='background-color: #f8f9fa; padding: 20px; border-radius: 15px; margin-bottom: 20px;'>
-        <h1 style='color: #18181b; margin-bottom: 0px;'>🐳 SGS Auditor AI (Powered by DeepSeek)</h1>
-        <p style='color: #71717a; font-size: 16px;'>ระบบตรวจสอบเกรดและเวลาเรียน ขับเคลื่อนด้วยสมองกล DeepSeek-V3 เก่งตรรกะ แม่นยำ และอ่าน PDF ได้</p>
+    <div style='background-color: #f0fdf4; padding: 20px; border-radius: 15px; margin-bottom: 20px; border: 1px solid #bbf7d0;'>
+        <h1 style='color: #166534; margin-bottom: 0px;'>🟢 SGS Auditor AI (Powered by ChatGPT)</h1>
+        <p style='color: #15803d; font-size: 16px;'>ระบบตรวจสอบเกรดและเวลาเรียน ขับเคลื่อนด้วยสมองกล GPT-4o-mini เก่งภาษาไทยและแม่นยำสูง</p>
     </div>
 """, unsafe_allow_html=True)
 
@@ -57,14 +58,14 @@ def extract_text_from_files(files, prefix):
     return combined_text
 
 # ==========================================
-# 🚀 ระบบประมวลผลด้วย DeepSeek
+# 🚀 ระบบประมวลผลด้วย ChatGPT
 # ==========================================
 st.markdown("<br>", unsafe_allow_html=True)
-if st.button("🚀 เริ่มวิเคราะห์ด้วย DeepSeek AI", type="primary", use_container_width=True):
+if st.button("🚀 เริ่มวิเคราะห์ด้วย ChatGPT", type="primary", use_container_width=True):
     if not sgs_files or not to_files or not time_files:
         st.error("⚠️ กรุณาอัปโหลดไฟล์ให้ครบทั้ง 3 หมวดก่อนทำการวิเคราะห์ครับ")
     else:
-        with st.spinner("🐳 กำลังให้สมองกล DeepSeek อ่านไฟล์และจับผิดข้อมูล (อาจใช้เวลา 1-2 นาที)..."):
+        with st.spinner("🟢 กำลังให้ ChatGPT อ่านไฟล์และจับผิดข้อมูล (อาจใช้เวลา 1-2 นาที)..."):
             try:
                 # 1. แปลงไฟล์ทั้งหมดเป็นข้อความ
                 sgs_text = extract_text_from_files(sgs_files, "SGS")
@@ -97,11 +98,11 @@ if st.button("🚀 เริ่มวิเคราะห์ด้วย DeepSe
                 }}
                 """
 
-                # 3. เรียกใช้งาน DeepSeek API
+                # 3. เรียกใช้งาน ChatGPT API (ใช้รุ่น gpt-4o-mini)
                 response = client.chat.completions.create(
-                    model="deepseek-chat",
+                    model="gpt-4o-mini",
                     messages=[
-                        {"role": "system", "content": "You are a data formatting assistant. You must output valid JSON only. Do not wrap it in ```json blocks."},
+                        {"role": "system", "content": "You are a helpful data processing assistant. You must output valid JSON only. Do not wrap it in markdown block quotes."},
                         {"role": "user", "content": prompt}
                     ],
                     response_format={"type": "json_object"}
@@ -132,7 +133,7 @@ if st.button("🚀 เริ่มวิเคราะห์ด้วย DeepSe
                 st.download_button(
                     label="📥 ดาวน์โหลดผลลัพธ์ (Excel)",
                     data=output.getvalue(),
-                    file_name="DeepSeek_Auditor_Report.xlsx",
+                    file_name="ChatGPT_Auditor_Report.xlsx",
                     mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
                     type="primary"
                 )
